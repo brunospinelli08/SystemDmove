@@ -27,8 +27,8 @@ CREATE INDEX idx_workspaces_owner ON workspaces(owner_id);
 CREATE TABLE workspace_members (
     workspace_id BIGINT NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
     user_id      BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    role         VARCHAR(20) NOT NULL DEFAULT 'member'
-                 CHECK (role IN ('owner', 'admin', 'member')),
+    role         VARCHAR(20) NOT NULL DEFAULT 'MEMBER'
+                 CHECK (role IN ('OWNER', 'ADMIN', 'MEMBER')),
     created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
     PRIMARY KEY (workspace_id, user_id)
 );

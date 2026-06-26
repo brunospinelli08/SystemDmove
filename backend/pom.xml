@@ -79,10 +79,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Flyway (migrations do banco) -->
+		<!-- Flyway (migrations do banco). No Spring Boot 4 e necessario o
+		     starter (modulo de auto-config), nao apenas o flyway-core. -->
 		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-flyway</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
