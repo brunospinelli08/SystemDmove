@@ -1,23 +1,32 @@
-// Cliente HTTP base para falar com o backend (Spring Boot).
-// A URL vem da variavel de ambiente VITE_API_URL (veja .env.example).
+import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080/api";
 
-export async function apiGet<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_URL}${path}`);
-  if (!response.ok) {
-    throw new Error(`Erro na requisicao: ${response.status}`);
+export const TOKEN_KEY = "systemdmove_token";
+
+export const api = axios.create({
+  baseURL: API_URL,
+});
+
+// Injeta o JWT em toda requisicao.
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  return response.json() as Promise<T>;
-}
+  return config;
+});
 
-export interface HealthResponse {
-  status: string;
-  service: string;
-  timestamp: string;
-}
-
-// Exemplo: consome o endpoint /api/health do backend.
-export function getHealth(): Promise<HealthResponse> {
-  return apiGet<HealthResponse>("/health");
-}
+// Em 401, limpa a sessao e volta para o login.
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem(TOKEN_KEY);
+      if (!window.location.pathname.startsWith("/login")) {
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(error);
+  },
+);
