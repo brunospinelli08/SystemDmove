@@ -1,13 +1,24 @@
-# Frontend
+# Frontend — React + Vite + TypeScript
 
-Parte da aplicação que o usuário vê e interage (interface).
+Interface do SystemDmove. Usa React, Vite e TypeScript.
 
-## Estrutura
+## Estrutura (`src/`)
 
-- `public/` — arquivos estáticos públicos (index.html, ícones, imagens fixas)
-- `src/assets/` — imagens, fontes e mídias usadas no código
-- `src/components/` — componentes reutilizáveis de interface (botões, cards, etc.)
-- `src/pages/` — telas/páginas da aplicação
-- `src/services/` — comunicação com o backend (chamadas de API)
-- `src/styles/` — estilos (CSS, temas)
-- `src/utils/` — funções auxiliares do frontend
+- `components/` — componentes reutilizáveis de interface
+- `pages/` — telas/páginas da aplicação
+- `services/` — comunicação com o backend (ex.: `api.ts`)
+- `hooks/` — hooks customizados do React
+- `styles/` — estilos compartilhados
+- `utils/` — funções auxiliares
+- `assets/` — imagens, ícones e mídias
+
+## Como rodar
+
+```bash
+# A partir da pasta frontend/
+npm install      # primeira vez
+npm run dev      # ambiente de desenvolvimento
+```
+
+O frontend sobe em `http://localhost:5173` e consome a API em `http://localhost:8080/api`
+(configurável via `VITE_API_URL`).
